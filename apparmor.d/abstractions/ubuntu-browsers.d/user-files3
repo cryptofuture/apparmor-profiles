@@ -1,0 +1,21 @@
+  # Do not allow read and/or write to particularly sensitive/problematic files
+  #include <abstractions/private-files-wuala>
+
+  # vim:syntax=apparmor
+
+  # Allow read to all files user has DAC access to and write access to all
+  # files owned by the user in $HOME.
+  @{HOME}/ r,
+  @{HOME}/** r,
+  owner @{HOME}/** rwkmix,
+
+  # Do not allow read and/or write to particularly sensitive/problematic files
+  #include <abstractions/private-files>
+
+  # Allow read to all files user has DAC access to and write for files the user
+  # owns on removable media and filesystems.
+  /media/** r,
+  /mnt/** r,
+  owner /media/** w,
+  owner /mnt/** w,
+

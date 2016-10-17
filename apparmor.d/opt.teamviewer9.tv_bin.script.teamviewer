@@ -1,0 +1,42 @@
+# Last Modified: Tue Aug 26 04:57:33 2014
+#include <tunables/global>
+
+/opt/teamviewer9/tv_bin/script/teamviewer {
+  #include <abstractions/base>
+  #include <abstractions/X>
+  capability sys_ptrace,
+  /opt/teamviewer9/ rw,
+  /opt/teamviewer9/* rwkmix,
+  /opt/teamviewer9/** rwkmix,
+  /bin/{readlink,grep,ls,mkdir,cp,chmod,sleep,rm,ln,touch,sed} rix,
+  /usr/bin/{dirname,flock,cut,xprop,tr,id,wc,head} rix,
+  network tcp,
+  owner @{HOME}/.Xauthority r,
+  /etc/nsswitch.conf r,
+  /etc/passwd rm,
+  /tmp/.wine-*/ rw,
+  /tmp/.wine-*/server-*/ rw,
+  /tmp/.wine-*/server-*/* rwmk,
+  owner @{PROC}/[0-9]*/net/route r,
+  owner @{PROC}/[0-9]*/environ r,
+  /usr/share/icons/** r,
+  owner @{PROC}/[0-9]*/task/ r,
+  /tmp/.X11-unix/ r,
+  owner @{PROC}/[0-9]*/cmdline r,
+  owner @{PROC}/[0-9]*/stat r,
+  /etc/ssl/certs/ca-certificates.crt r,
+  owner @{PROC}/ r,
+  /etc/ r,
+  /tmp/sh-thd-* rwkm,
+  /sys/devices/pci0000:00/0000:00:11.0/net/eth0/uevent r,
+  /sys/devices/virtual/net/lo/uevent r,
+  /sys/devices/pci0000:00/0000:00:11.0/uevent r,
+  #/var/lib/dbus/machine-id r,
+  /sys/devices/virtual/dmi/id/board_name r,
+  owner @{PROC}/[0-9]*/mounts r,
+  /dev/disk/by-uuid/ r,
+  /etc/fstab r,
+  /sys/devices/system/cpu/ r, 
+  owner @{PROC}/[0-9]*/auxv r,
+  /etc/resolv.conf r,
+}

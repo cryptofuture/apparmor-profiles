@@ -1,0 +1,29 @@
+# Last Modified: Sat May 31 00:47:05 2014
+#include <tunables/global>
+
+/usr/bin/wuala {
+  #include <abstractions/base>
+  #include <abstractions/bash>
+  #include <abstractions/ubuntu-browsers.d/java2>
+  #include <abstractions/private-files-wuala>
+  owner @{HOME}/.wuala/ rw,
+  owner @{HOME}/.wuala/** rw,
+  /bin/mkdir rix,
+  /bin/bash rix,
+  /bin/which rix,
+  /usr/bin/wc rix,
+  /bin/grep rix,
+  /usr/bin/gsettings rix,
+  /bin/chmod rix,
+  /dev/tty rw,
+  /usr/share/applications/mimeinfo.cache r,
+  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+  /usr/share/icons/ r,
+  /usr/share/icons/** r,
+  /usr/share/mime/ r,
+  /usr/share/mime/** r,
+  /proc/meminfo r,
+  /usr/bin/env ix,
+  /usr/bin/wuala r,
+  }
+

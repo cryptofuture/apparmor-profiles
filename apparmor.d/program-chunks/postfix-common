@@ -1,0 +1,24 @@
+# ------------------------------------------------------------------
+#
+#    Copyright (C) 2002-2005 Novell/SUSE
+#
+#    This program is free software; you can redistribute it and/or
+#    modify it under the terms of version 2 of the GNU General Public
+#    License published by the Free Software Foundation.
+#
+# ------------------------------------------------------------------
+# used with postfix/*
+
+
+  capability            setuid,
+  capability            setgid,
+  capability            sys_chroot,
+
+  /etc/postfix/*.cf     r,
+  /etc/postfix/*.db     r,
+  @{PROC}/net/if_inet6  r,
+  /usr/lib/postfix/*.so mr,
+  /usr/lib64/sasl2/*    mr,
+  /usr/lib64/sasl2/     r,
+  /usr/lib/sasl2/*      mr,
+  /usr/lib/sasl2/       r,

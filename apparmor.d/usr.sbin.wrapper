@@ -1,0 +1,16 @@
+# Last Modified: Sat May 31 08:24:22 2014
+#include <tunables/global>
+
+/usr/sbin/wrapper {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+  #include <abstractions/ubuntu-browsers.d/java4>
+  #include <abstractions/private-files-strict>
+  /etc/i2p/wrapper.config rw,
+  /run/i2p/i2p.pid rw,
+  /run/i2p/routerjvm.pid rw,
+  /usr/sbin/wrapper mr,
+  /usr/share/i2p/lib/ r,
+  /var/log/i2p/ rw,
+  /var/log/i2p/** rw,
+}

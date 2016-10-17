@@ -1,0 +1,137 @@
+# vim:syntax=apparmor
+
+# Declare an apparmor variable to help with overrides
+@{MOZ_LIBDIR}=/usr/lib/firefox-trunk
+#include <tunables/global>
+/usr/lib/firefox-trunk/firefox{,*[^s][^h]} {
+  #include <abstractions/base>
+  #include <abstractions/audio>
+  #include <abstractions/fonts>
+  #include <abstractions/X>
+  #include <abstractions/user-tmp>
+  #include <abstractions/nameservice>
+  #include <abstractions/dbus>
+  #include <abstractions/dbus-session>
+
+  # Addons
+  #include <abstractions/ubuntu-browsers.d/firefox-trunk>
+
+  # should maybe be in abstractions
+  /etc/mime.types r,
+  /etc/mailcap r,
+  /etc/xdg/*buntu/applications/defaults.list    r, # for all derivatives
+  /usr/share/xubuntu/applications/defaults.list r,
+  /etc/adobe/mms.cfg r,
+  owner @{HOME}/.local/share/applications/defaults.list r,
+  owner @{HOME}/.local/share/applications/mimeapps.list r,
+  owner @{HOME}/.local/share/applications/mimeinfo.cache r,
+  owner /tmp/** m,
+  #owner /var/tmp/** m,
+
+  owner /{,var/}run/shm/shmfd-* rw,
+  /tmp/.X[0-9]*-lock r,
+
+  #/etc/udev/udev.conf r,
+  # Doesn't seem to be required, but noisy. Maybe allow 'r' for 'b*' if needed.
+  # Possibly move to an abstraction if anything else needs it.
+  deny /run/udev/data/** r,
+
+  /etc/timezone r,
+  /etc/wildmidi/wildmidi.cfg r,
+
+  # firefox specific
+  /etc/firefox*/ r,
+  /etc/firefox*/** r,
+  /etc/xul-ext/** r,
+  /etc/xulrunner-2.0*/ r,
+  /etc/xulrunner-2.0*/** r,
+  /etc/gre.d/ r,
+  /etc/gre.d/* r,
+
+  # noisy
+  deny @{MOZ_LIBDIR}/** w,
+  deny /usr/lib/firefox-trunk-addons/** w,
+  deny /usr/lib/xulrunner-addons/** w,
+  deny /usr/lib/xulrunner-*/components/*.tmp w,
+  deny /.suspended r,
+  deny /boot/initrd.img* r,
+  deny /boot/vmlinuz* r,
+  deny /var/cache/fontconfig/ w,
+  deny @{HOME}/.local/share/recently-used.xbel r,
+
+  # TODO: investigate
+  deny /usr/bin/gconftool-2 x,
+
+  # These are needed when a new user starts firefox and firefox.sh is used
+  @{MOZ_LIBDIR}/** ixr,
+  /usr/bin/basename ixr,
+  /usr/bin/dirname ixr,
+  /usr/bin/pwd ixr,
+  /sbin/killall5 ixr,
+  /bin/which ixr,
+  /usr/bin/tr ixr,
+  @{PROC}/ r,
+  @{PROC}/[0-9]*/cmdline r,
+  @{PROC}/[0-9]*/mountinfo r,
+  @{PROC}/[0-9]*/stat r,
+  owner @{PROC}/[0-9]*/task/[0-9]*/stat r,
+  @{PROC}/[0-9]*/status r,
+  @{PROC}/filesystems r,
+  owner @{HOME}/.thumbnails/*/*.png r,
+
+  /etc/mtab r,
+  /etc/fstab r,
+
+  # about:memory
+  owner @{PROC}/[0-9]*/statm r,
+  owner @{PROC}/[0-9]*/smaps r,
+
+  # Needed for container to work in xul builds
+  /usr/lib/xulrunner-*/plugin-container ixr,
+
+  # per-user firefox configuration
+  owner @{HOME}/.{firefox,mozilla}/ rw,
+  owner @{HOME}/.{firefox,mozilla}/** rw,
+  owner @{HOME}/.{firefox,mozilla}/**/*.{db,parentlock,sqlite}* k,
+  owner @{HOME}/.{firefox,mozilla}/plugins/** rm,
+  owner @{HOME}/.{firefox,mozilla}/**/plugins/** rm,
+  owner @{HOME}/.gnome2/firefox*-bin-* rw,
+  owner @{HOME}/.cache/mozilla/{,firefox-trunk/} rw,
+  owner @{HOME}/.cache/.mozilla/ rw,
+  owner @{HOME}/.cache/.mozilla/** rw,
+  owner @{HOME}/.cache/mozilla/firefox-trunk/** rw,
+  owner @{HOME}/.cache/mozilla/firefox-trunk/**/*.sqlite k,
+  owner @{HOME}/.{firefox,mozilla}/firefox-trunk/**/places.sqlite-shm rwk,
+
+  #
+  # Extensions
+  # /usr/share/.../extensions/... is already covered by '/usr/** r', above.
+  # Allow 'x' for downloaded extensions, but inherit policy for safety
+  owner @{HOME}/.mozilla/firefox-trunk/**/extensions/** mixr,
+
+  deny @{MOZ_LIBDIR}/update.test w,
+  deny /usr/lib/mozilla/extensions/**/ w,
+  deny /usr/lib/xulrunner-addons/extensions/**/ w,
+  deny /usr/share/mozilla/extensions/**/ w,
+  deny /usr/share/mozilla/ w,
+  deny /etc/hosts r,
+
+  # Miscellaneous (to be abstracted)
+  # Ideally these would use a child profile. They are all ELF executables
+  # so running with 'Ux', while not ideal, is ok because we will at least r,
+  # benefit from glibc's secure execute.
+  /usr/bin/mkfifo Uxr,  # investigate
+  /bin/ps Uxr,
+
+  /usr/share/hunspell/ r,
+  /usr/share/hunspell/* r,
+  network tcp,
+  /usr/bin/pulseaudio rix,
+  @{PROC}/[0-9]*/fd/ r,
+  /usr/local/texlive/*/texmf-dist/fonts/** r,
+  # gtk3
+  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+  # Multi-process
+  /dev/shm/org.chromium.* rw,
+  /usr/lib/xul-ext/** r,
+}

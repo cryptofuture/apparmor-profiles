@@ -1,0 +1,12 @@
+# If we allow the above, nvidia based systems will also need these
+  /dev/nvidia0 rw,
+  @{PROC}/interrupts r,
+  /etc/vdpau_wrapper.cfg r,
+  /proc/driver/nvidia/params r,
+  /dev/nvidiactl rw,
+  /home/*/.nv/GLCache/** k,
+  /home/*/.nv/GLCache/*/*/** k,
+  /dev/nvidia** rw,
+  /usr/share/nvidia-*/ r,
+  /usr/share/nvidia-*/* r,
+  /usr/share/nvidia-*/** r,

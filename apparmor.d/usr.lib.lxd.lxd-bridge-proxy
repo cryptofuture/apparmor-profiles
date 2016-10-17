@@ -1,0 +1,13 @@
+# Author: Simon Deziel <simon.deziel@gmail.com>
+
+#include <tunables/global>
+
+/usr/lib/lxd/lxd-bridge-proxy {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+
+  # Go wants this for some reason
+  deny capability net_admin,
+
+  @{PROC}/sys/net/core/somaxconn r,
+}

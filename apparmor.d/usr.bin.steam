@@ -1,0 +1,116 @@
+#include <tunables/global>
+
+/usr/bin/steam {
+
+	#include <abstractions/base>
+	#include <abstractions/bash>
+	#include <abstractions/consoles>
+	#include <abstractions/python>
+	#include <abstractions/user-tmp-steam>
+	#include <abstractions/nameservice>
+	#include <abstractions/fonts>
+	#include <abstractions/X>
+	#include <abstractions/freedesktop.org>
+	#include <abstractions/user-download>
+	#include <abstractions/audio>
+	#include <abstractions/site/base>
+	#include <abstractions/private-files-strict>
+	#include <abstractions/dbus>
+	#include <abstractions/dbus-session>
+
+	# Should always have dedicated uid and home
+	owner @{HOME}/ rwk,
+	owner @{HOME}/** rwkmix,
+	owner @{HOME}/.local/share/Steam/ubuntu{32,64}/fontconfig/** rwkl,
+    
+    # Steamapss non-default location
+	/mnt/Steam/ rwk,
+	/mnt/Steam/* rwkmix,
+	/mnt/Steam/** rwkmix,
+    /mnt/ r,
+    
+	/usr/share/blastem/blastem-bin rix,
+	/usr/share/blastem/* r,
+	/usr/share/blastem/** r,
+	owner @{HOME}/.config/blastem/* rw,
+	owner @{HOME}/.config/blastem/** rw,
+
+	# Games
+	owner @{HOME}/.mono/ rw,
+	owner @{HOME}/.mono/* rw,
+	owner @{HOME}/.mono/** rw,
+	/usr/local/texlive/*/texmf-dist/fonts/** rw,
+
+	# Steam controller
+	/sys/bus/usb/devices/ r,
+	/dev/uinput rw,
+	/dev/bus/usb/*/[0-9]* rw,
+	/dev/input/event* rw,
+	/dev/input/js* rw,
+	/var/lib/usbutils/usb.ids r,
+
+
+	# Steam bootstrap is a bash script
+	/ r,
+	/usr/bin/steam mrix,
+	/{usr/,}bin/* rix,
+	/etc/os-release r,
+	
+	#Anodyne
+	#Needs Adobe Air
+	/opt/Adobe*/** mrix,
+
+	# You want drm you get it!
+	# The machine ID does not change based on user configuration or when hardware is replaced!
+	# machine-id file contains the unique machine ID of the local system that is set during installation.
+	# updated to block machine-id, works with dbus
+	deny @{HOME}/.config/ibus/bus/ rw,
+	deny @{HOME}/.config/ibus/bus/** rw,
+	deny /var/lib/dbus/machine-id r,
+	#audit deny /var/lib/dbus/machine-id r,
+	#/proc/cmdline r,
+
+	# A lot of hw access
+	/etc/core/app/X/drirc r,
+	/etc/udev/udev.conf r,
+	/run/udev/data/* r,
+	/sys/ r,
+	/sys/** r,
+	/dev/** r,
+	/dev/dri/card* m,
+
+	# lspci is too messy
+	deny /usr/sbin/lspci rx,
+
+	# shm
+#	/dev/nvidia** rwm,
+	/dev/snd/pcm* rwm,
+	/run/shm/.org.chromium* rwmk,
+	/run/shm/steam-* rwmk,
+	/run/shm/mono.* rwmk,
+	/run/shm/mono-* rwmk,
+	/run/shm/steam-* rwmk,
+	/run/shm/yourusername-Valve* rwmk,
+	/run/shm/yourusername-Shm* rwmk,
+	/run/shm/pulse-* rwmk,
+	/run/shm/Valve* rwmk,
+	#
+	/dev/shm/* rwmk,
+
+
+	# Misc
+	owner @{PROC}/[0-9]*/auxv r,
+	owner @{PROC}/[0-9]*/status r,
+	owner @{PROC}/[0-9]*/task/ r,
+	owner @{PROC}/[0-9]*/fd/ r,
+	owner @{PROC}/[0-9]*/task/[0-9]*/stat r,
+	owner @{PROC}/[0-9]*/environ r,
+	@{PROC}/version r,
+	/usr/share/zenity/* r,
+	/usr/share/themes/*/gtk-2.0/gtkrc r,
+	/etc/adobe/mms.cfg r,
+
+	network,
+	/usr/local/texlive/*/texmf-dist/fonts/truetype/** r,
+	/usr/local/texlive/*/texmf-dist/fonts/opentype/** r,
+}

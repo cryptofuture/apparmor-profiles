@@ -1,0 +1,107 @@
+#include <tunables/global>
+
+/usr/bin/wine-preloader {
+
+	#include <abstractions/base>
+	#include <abstractions/fonts>
+	#include <abstractions/nameservice>
+	#include <abstractions/site/de>
+	#include <abstractions/site/base>
+	#include <abstractions/X>
+	#include <abstractions/freedesktop.org>
+	#include <abstractions/audio>
+	#include <abstractions/private-files>
+
+	/usr/bin/wine-preloader rix,
+	/usr/bin/wineserver px,
+	/usr/bin/wine mr,
+
+	/usr/lib/wine/*.so mr,
+	/usr/share/wine/fonts/ r,
+	/usr/share/wine/fonts/* r,
+	/usr/share/wine/wine.inf r,
+
+	/tmp/.wine-*/server-*/* rwmk,
+
+	/etc/fstab r,
+	/usr/share/terminfo/** r,
+
+	deny /usr/bin/update-mime-database x, # winemenubuilder, non-critical
+	deny capability sys_ptrace, # wine debugger, don't know how to use it anyway
+
+	owner @{HOME}/ r,
+	owner @{HOME}/.wine/ rw,
+	owner @{HOME}/.wine/** rwmk,
+	owner @{HOME}/.local/share/icons/hicolor/** rwk,
+	owner @{HOME}/.local/share/applications/** rwk,
+
+	/tmp/.wine-*/ rw,
+	/tmp/.wine-*/server-*/ rw,
+	/tmp/.wine-*/server-*/* rwmk,
+
+	# for initial ~/.wine creation/updates only
+	/ r,
+	/usr/share/wine/** r,
+
+	# Actual games
+	owner @{PROC}/[0-9]*/mounts r,
+	deny /dev/video0 rw, # what for?
+	deny @{HOME}/.config/ibus/bus/ rw,
+	deny @{HOME}/.config/ibus/bus/** rw,
+	deny /var/lib/dbus/machine-id r,
+
+
+
+
+	/usr/bin/dosbox cx -> dosbox,
+
+	profile dosbox {
+		#include <abstractions/base>
+		#include <abstractions/X>
+		#include <abstractions/audio>
+		#include <abstractions/site/base>
+		#include <abstractions/private-files>
+
+		/etc/fstab r,
+		owner @{PROC}/[0-9]*/mounts r,
+
+		# DosBox seem to use these directly
+		/dev/input/event[0-9]* r,
+		/dev/input/js[0-9]* r,
+
+		owner @{HOME}/ r,
+		owner @{HOME}/.wine/ rw,
+		owner @{HOME}/.wine/** rwmk,
+	}
+
+}
+
+/usr/bin/wineserver {
+
+	#include <abstractions/base>
+	#include <abstractions/nameservice>
+	#include <abstractions/freedesktop.org>
+	#include <abstractions/private-files>
+
+	/usr/bin/wineserver r,
+
+	/tmp/.wine-*/ rw,
+	/tmp/.wine-*/server-*/ rw,
+	/tmp/.wine-*/server-*/* rwmk,
+
+	owner @{HOME}/ r,
+	owner @{HOME}/.wine/ rw,
+	owner @{HOME}/.wine/** rwmk,
+	owner @{HOME}/.local/share/icons/hicolor/** rwk,
+
+	deny @{HOME}/Downloads/ r, # not sure why it looks there, wine addon downloads?
+
+	# for initial ~/.wine creation only
+	/ r,
+	/usr/share/wine/** r,
+
+	# Actual games
+	network ipx dgram, # IPX, wow ;)
+	/etc/ld.so.preload r,
+
+}

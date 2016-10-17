@@ -1,0 +1,36 @@
+# Last Modified: Wed Jun  4 15:10:28 2014
+#include <tunables/global>
+
+/usr/bin/zuluCrypt-gui {
+  #include <abstractions/base>
+  #include <abstractions/gnome>
+  #include <abstractions/private-files-zulu>
+  #include <abstractions/dbus>
+  #include <abstractions/dbus-session>
+  #include <abstractions/kde>
+  @{HOME}/ rwk,
+  @{HOME}/** rwk,
+  /media/ r,
+  /media/** r,
+  /mnt/** rw,
+  /mnt/ rw,
+  /dev/md/ r,
+  /dev/dm-[0-9]* rw,
+  /usr/bin/zuluCrypt-gui mr,
+  deny network,
+  owner @{HOME}/.zuluCrypt/ r,
+  owner @{HOME}/.zuluCrypt/* rw,
+  owner @{HOME}/.zuluCrypt-socket/  r,
+  owner @{HOME}/.zuluCrypt-socket/*  rwk,
+  /usr/bin/zuluCrypt-cli Ux,
+  /var/cache/cracklib/* r,
+  /etc/passwd r,
+  /bin/which rix,
+  deny  @{HOME}/.config/ibus/bus/ rw,
+  deny  @{HOME}/.config/ibus/bus/** rw,
+  deny /var/lib/dbus/machine-id r,
+  /usr/local/texlive/*/texmf-dist/fonts/** r,
+  /proc/[0-9]*/mountinfo r,
+  /proc/[0-9]*/cmdline r,
+
+}

@@ -1,0 +1,11 @@
+#include <tunables/global>
+
+/usr/bin/jitsi {
+  #include <abstractions/base>
+  #include <abstractions/bash>
+  #include <abstractions/ubuntu-browsers.d/javajit>
+  #include <abstractions/private-files>
+  /dev/tty rw,
+  /usr/bin/jitsi rix,
+  /bin/{sed,which} rix,
+  }

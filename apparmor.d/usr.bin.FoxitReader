@@ -1,0 +1,32 @@
+# Last Modified: Thu May  8 14:03:21 2014
+#include <tunables/global>
+
+/usr/bin/FoxitReader {
+  #include <abstractions/base>
+  #include <abstractions/ubuntu-browsers.d/user-files>
+  #include <abstractions/X>
+  #include <abstractions/fonts>
+  /etc/nsswitch.conf r,
+
+  owner @{HOME}/.Foxit/foxit.conf rw,
+  /usr/bin/FoxitReader mr,
+  /usr/lib{,32,64}/** mr,
+  /usr/share/fonts/** r,
+  /usr/share/fonts/ r,
+  /usr/share/texmf/** r,
+  /usr/share/texmf/ r,
+  /usr/local/texlive/** r,
+  /usr/local/texlive/ r,
+  /usr/share/icons/** r,
+  /usr/share/icons/ r,
+  /usr/share/themes/** r,
+  /usr/share/themes/ r,
+  /usr/share/mime/ r,
+  /usr/share/mime/** r,
+  /proc/[0-9]*/mounts r,
+  /usr/share/pixmaps/ r,
+  /usr/share/pixmaps/** r,
+  deny network,
+    deny /etc/passwd r,
+  deny @{HOME}/.Xauthority r,
+}

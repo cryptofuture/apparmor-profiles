@@ -1,0 +1,7 @@
+# This file is updated by 'aa-update-browser' and may be overwritten on
+# upgrades.
+#
+# For site-specific adjustments, please see /etc/apparmor.d/local/<binary>
+
+##include <abstractions/ubuntu-browsers.d/nvidia>
+#include <abstractions/ubuntu-browsers.d/firefox-user-files>

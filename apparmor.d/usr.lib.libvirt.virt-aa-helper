@@ -1,0 +1,69 @@
+# Last Modified: Mon Jul  06 17:22:37 2009
+#include <tunables/global>
+
+/usr/lib/libvirt/virt-aa-helper {
+  #include <abstractions/base>
+  #include <abstractions/user-tmp>
+
+  # needed for searching directories
+  capability dac_override,
+  capability dac_read_search,
+
+  # needed for when disk is on a network filesystem
+  network inet,
+  network inet6,
+
+  deny @{PROC}/[0-9]*/mounts r,
+  @{PROC}/[0-9]*/net/psched r,
+  owner @{PROC}/[0-9]*/status r,
+  @{PROC}/filesystems r,
+
+  # for hostdev
+  /sys/devices/ r,
+  /sys/devices/** r,
+  /sys/bus/usb/devices/ r,
+  /sys/bus/usb/devices/** r,
+  deny /dev/sd* r,
+  deny /dev/dm-* r,
+  deny /dev/mapper/ r,
+  deny /dev/mapper/* r,
+
+  /usr/lib/libvirt/virt-aa-helper mr,
+  /sbin/apparmor_parser Ux,
+
+  # for openvswitch
+  /{,var/}run/** rw,
+
+  /etc/apparmor.d/libvirt/* r,
+  /etc/apparmor.d/libvirt/libvirt-[0-9a-f]*-[0-9a-f]*-[0-9a-f]*-[0-9a-f]*-[0-9a-f]* rw,
+
+  # For backingstore, virt-aa-helper needs to peek inside the disk image, so
+  # allow access to non-hidden files in @{HOME} as well as storage pools, and
+  # removable media and filesystems, and certain file extentions. A
+  # virt-aa-helper failure when checking a disk for backinsgstore is non-fatal
+  # (but obviously the backingstore won't be added).
+  audit deny @{HOME}/.* mrwkl,
+  audit deny @{HOME}/.*/ rw,
+  audit deny @{HOME}/.*/** mrwkl,
+  @{HOME}/ r,
+  @{HOME}/** r,
+  @{HOME}/.Private/** mrwlk,
+  @{HOMEDIRS}/.ecryptfs/*/.Private/** mrwlk,
+
+  /var/lib/libvirt/images/ r,
+  /var/lib/libvirt/images/** r,
+  /var/lib/nova/images/** r,
+  /var/lib/nova/instances/_base/** r,
+  /var/lib/nova/instances/snapshots/** r,
+  /var/lib/eucalyptus/instances/**/disk* r,
+  /var/lib/eucalyptus/instances/**/loader* r,
+  /var/lib/uvtool/libvirt/images/** r,
+  /{media,mnt,opt,srv}/** r,
+
+  /**.img r,
+  /**.qcow{,2} r,
+  /**.qed r,
+  /**.vmdk r,
+  /**.[iI][sS][oO] r,
+  /**/disk{,.*} r,
+}

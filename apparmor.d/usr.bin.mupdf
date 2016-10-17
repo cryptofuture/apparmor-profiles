@@ -1,0 +1,27 @@
+# Last Modified: Tue Apr 26 22:27:05 2016
+#include <tunables/global>
+
+/usr/bin/mupdf {
+  #include <abstractions/base>
+  #include <abstractions/ubuntu-browsers.d/user-files>
+  #include <abstractions/X>
+  #include <abstractions/fonts>
+
+
+  #/bin/dash ix,
+  /bin/rm rix,
+  /bin/tempfile rix,
+  /usr/bin/mupdf r,
+  /usr/lib/mupdf/mupdf-x11 rix,
+  /usr/share/fonts/** r,
+  /usr/share/fonts/ r,
+  /usr/share/texmf/** r,
+  /usr/share/texmf/ r,
+  /usr/local/texlive/** r,
+  /usr/local/texlive/ r,
+  /tmp/*.pdf rw,
+  /usr/lib/x86_64-linux-gnu/ r,
+  network inet stream,
+  /usr/share/icons/** r,
+
+}

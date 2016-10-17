@@ -1,0 +1,23 @@
+# Last Modified: Tue Jun  3 10:40:24 2014
+#include <tunables/global>
+
+/usr/bin/SpiderOak {
+  #include <abstractions/base>
+  #include <abstractions/private-files>
+  #include <abstractions/python>
+  #include <abstractions/gnome>
+  /usr/bin/SpiderOak r,
+  /usr/bin/dirname rix,
+  network,
+  /opt/SpiderOak/ rw,
+  /opt/SpiderOak/lib/** rwkmix,
+  /opt/SpiderOak/lib/ r,
+  owner @{HOME}/.config/SpiderOak/ rw,
+  owner @{HOME}/.config/SpiderOak/** rwk,
+  /tmp/ffi* rwmk,
+  deny /etc/mtab r,
+  owner @{HOME}/ r,
+  owner @{HOME}/SpiderOak/ r,
+  owner @{HOME}/SpiderOak/* rw,
+  owner @{HOME}/SpiderOak/** rw,
+}

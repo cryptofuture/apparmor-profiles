@@ -1,0 +1,63 @@
+# REPOSITORY: http://apparmor.test.opensuse.org/backend/api draglor 53
+# Additional profiling based on work by Андрей Калинин, LP: #226624
+# Additional profiling based on LP: #933440
+#include <tunables/global>
+/usr/bin/skype {
+  #include <abstractions/audio>
+  #include <abstractions/base>
+  #include <abstractions/fonts>
+  #include <abstractions/freedesktop.org>
+  #include <abstractions/gnome>
+  #include <abstractions/kde>
+  #include <abstractions/ibus>
+  #include <abstractions/nameservice>
+  #include <abstractions/user-tmp>
+  #include <abstractions/X>
+  #include <abstractions/ssl_certs>
+  #include <abstractions/private-files-strict>
+
+  @{PROC}/sys/kernel/{ostype,osrelease} r,
+  @{PROC}/[0-9]*/net/arp r,
+  owner @{PROC}/[0-9]*/auxv r,
+  owner @{PROC}/[0-9]*/cmdline r,
+  owner @{PROC}/[0-9]*/task/ r,
+  owner @{PROC}/[0-9]*/task/[0-9]*/stat r,
+  owner @{PROC}/[0-9]*/fd/ r,
+
+  /sys/devices/**/power_supply/**/online r,
+  /sys/devices/system/cpu/ r,
+  /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_{cur_freq,max_freq} r,
+
+  /dev/ r,
+  /dev/video* mrw,
+  /dev/snd/* m,
+  owner /dev/shm/pulse-shm* m,
+  owner /run/shm/pulse-shm* m,
+
+  /var/cache/libx11/compose/* r,
+  /var/lib/dbus/machine-id r,
+
+  # should this be in a separate KDE abstraction?
+  @{HOME}/.kde/share/config/kioslaverc r,
+
+  /usr/bin/skype mr,
+  /etc/xdg/sni-qt.conf rk,
+  /etc/xdg/Trolltech.conf rk,
+  /usr/share/skype/** kr,
+  /usr/share/skype/**/*.qm mr,
+  /usr/share/skype/sounds/*.wav kr,
+  /usr/share/glib-2.0/schemas/gschemas.compiled mr,
+  @{HOME}/.Skype/ rw,
+  @{HOME}/.Skype/** krw,
+  @{HOME}/.config/* kr,
+
+  # Recent skype builds have an executable stack, so it tries to mmap certain
+  # files. Let's deny them for now.
+  deny /etc/passwd m,
+  deny /etc/group m,
+  deny /usr/share/fonts/** m,
+  deny /usr/share/texmf/fonts/** m,
+  # Should not be needed on 12.04 and later
+  /usr/lib/*-linux-gnu*/pango/** mr,
+
+}

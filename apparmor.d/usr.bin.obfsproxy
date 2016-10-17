@@ -1,0 +1,16 @@
+#include <tunables/global>
+
+/usr/bin/obfsproxy {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+  #include <abstractions/python>
+
+  /usr/bin/          r,
+  /usr/bin/obfsproxy r,
+  /usr/bin/python2.7 r,
+
+  /var/lib/tor/pt_state/scramblesuit/* rw,
+
+  # Site-specific additions and overrides. See local/README for details.
+  #include <local/usr.bin.obfsproxy>
+}
