@@ -12,9 +12,14 @@ __Pull requests, are welcome here! Let's make apparmor profiles creation easier 
 
 #### Inactive profiles
 
-#### Broken profiles
+#### Possibly broken profiles
 
 ### Profile installation
+You need to copy profile you need to use to `/etc/apparmor.d/`, check it for abstractions, and copy abstractions if you need it, possibly slight tweak profile for you needs and you good to go.
+
+```
+aa-enforce /etc/apparmor.d/usr.bin.profilenameyourneed 
+```
 
 ### Searching for more apparmor profiles
 * Ubuntu apparmor-profiles [bazaar branch](https://bazaar.launchpad.net/~apparmor-dev/apparmor-profiles/master/files/head:/ubuntu/)
