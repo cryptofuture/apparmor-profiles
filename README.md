@@ -19,7 +19,7 @@ __Pull requests, are welcome here! Let's make apparmor profiles creation easier 
 ### Searching for more apparmor profiles
 * Ubuntu apparmor-profiles [bazaar branch](https://bazaar.launchpad.net/~apparmor-dev/apparmor-profiles/master/files/head:/ubuntu/)
 * [thesimplecomputer.info](http://thesimplecomputer.info/apparmor/)
-* [insanitybit.com](http://www.insanitybit.com/) was popular resource for apparmor profiles back in days.
+* [insanitybit.com](http://www.insanitybit.com/) was popular resource for apparmor profiles back in days
 * [simondeziel/aa-profiles](https://github.com/simondeziel/aa-profiles)
 * [Falcon-peregrinus/apparmor-profiles] (https://github.com/Falcon-peregrinus/apparmor-profiles)
 * [mk-fg/apparmor-profiles] (https://github.com/mk-fg/apparmor-profiles)
