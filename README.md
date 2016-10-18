@@ -111,12 +111,16 @@ Basically some software in Ubuntu includes apparmor profiles, and its enough to 
 With abstractions help you could make profiles faster and clear. For example for Xorg application you need [X abstraction](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/abstractions/X) and profile for java application, could be real pain without [java abstraction](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/abstractions/ubuntu-browsers.d/java).  
 Check abstraction [here](https://github.com/cryptofuture/apparmor-profiles/tree/master/apparmor.d/abstractions).  
 Alongside with software abstractions there are [private files abstraction](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/abstractions/private-files) to disable access to non quite restricted software, and to disable really sensative parts.    
-Also you may find very useful user write/read abstraction to easy specify access to media and mount points and tmp for user.  
+Also, you may find very useful user write/read abstraction to easy specify access to media and mount points and tmp for user.  
 For example:  
 * [user-download](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/abstractions/user-download)
 * [user-tmp](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/abstractions/user-tmp)
 * [user-tmp-steam](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/abstractions/user-tmp-steam)
 * [user-write](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/abstractions/user-write)
+
+### Near future plans for this repository
+Import well made profiles from upstream and another sources to this repository. Most likely from apparmor-profiles [bazaar branch](https://bazaar.launchpad.net/~apparmor-dev/apparmor-profiles/master/files/head:/ubuntu/) first.
+As always, pull requests are welcome here!
 
 
 
