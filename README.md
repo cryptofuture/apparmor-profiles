@@ -9,6 +9,7 @@ __Pull requests, are welcome here! Let's make apparmor profiles creation easier 
 ### Profiles status
 #### Default profiles
 > Most profile here are default profiles from Ubuntu. Possibly should work without a problem in most installations, but could be not enough restricted.
+
 * bin.ping 	
 * lightdm-guest-session
 * lxc-containers
@@ -67,6 +68,8 @@ After=systemd-random-seed.service apparmor.service
 * [usr.bin.mupdf](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/usr.bin.mupdf)
 
 #### Inactive profiles
+> Currectly inactive profiles. Could be fixed with slight fixes.
+
 * [opt.teamviewer9.tv_bin.script.teamviewer](https://github.com/cryptofuture/apparmor-profiles/blob/raw/apparmor.d/opt.teamviewer9.tv_bin.script.teamviewer), teamviewer installed, from archive in /opt/, version bundled with wine. Version from deb/rpm profiles includes service, started with root rights, and I don't recommend it. Teamviewer work fine when you admin remote hoste, but will crash it, if someone try to connect to you. Possibly needs only slight modification, for new versions.
 * [usr.bin.jitsi](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/usr.bin.jitsi), outdated
 * [usr.bin.odeskteam-qt4](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/usr.bin.odeskteam-qt4), client dropped
@@ -75,6 +78,8 @@ After=systemd-random-seed.service apparmor.service
 * [usr.bin.vlc](https://github.com/cryptofuture/apparmor-profiles/blob/master/apparmor.d/usr.bin.vlc), outdated. Possibly needs slight modification. Based on profile from [insanitybit.com](http://www.insanitybit.com/).
 
 #### Possibly broken profiles
+> Broken profiles, not easy to fix.
+
 * [usr.bin.FoxitReader](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/usr.bin.FoxitReader), should work fine with 1.1 version under old distros(for example with Ubuntu 14.04.x and 12.04.x). Broken with new FoxitReader versions and on newer distros.
 * [usr.bin.SpiderOak](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/usr.bin.SpiderOak) outdated, needs modification or rewriting.
 * [usr.bin.VirtualBox](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/usr.bin.VirtualBox), works fine, but you need to disable it, on VB update, or when you installing extensions. Possibly will be outdated soon, since I didn't use VB. Based on profile from [insanitybit.com](http://www.insanitybit.com/).
@@ -101,4 +106,17 @@ Basically some software in Ubuntu includes apparmor profiles, and its enough to 
 * [Harvie/AppArmor-Profiles](https://github.com/Harvie/AppArmor-Profiles)
 * [CameronNemo/apparmor-elementary](https://github.com/CameronNemo/apparmor-elementary)
 * And more profiles [on GitHub](https://github.com/search?utf8=%E2%9C%93&q=apparmor+profile)
+
+### About abstractions and private-files
+With abstractions help you could make profiles faster and clear. For example for Xorg application you need [X abstraction](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/abstractions/X) and profile for java application, could be real pain without [java abstraction](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/abstractions/ubuntu-browsers.d/java).  
+Check abstraction [here](https://github.com/cryptofuture/apparmor-profiles/tree/master/apparmor.d/abstractions).  
+Alongside with software abstractions there are [private files abstraction](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/abstractions/private-files) to disable access to non quite restricted software, and to disable really sensative parts.    
+Also you may find very useful user write/read abstraction to easy specify access to media and mount points and tmp for user.  
+For example:  
+* [user-download](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/abstractions/user-download)
+* [user-tmp](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/abstractions/user-tmp)
+* [user-tmp-steam](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/abstractions/user-tmp-steam)
+* [user-write](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/abstractions/user-write)
+
+
 
