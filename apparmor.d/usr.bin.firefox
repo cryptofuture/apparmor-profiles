@@ -112,8 +112,7 @@
   #
   # Extensions
   # /usr/share/.../extensions/... is already covered by '/usr/** r', above.
-  # Allow 'x' for downloaded extensions, but inherit policy for safety
-  owner @{HOME}/.mozilla/**/extensions/** mixr,
+  owner @{HOME}/.mozilla/**/extensions/** rwm,
 
   deny @{MOZ_LIBDIR}/update.test w,
   deny /usr/lib/mozilla/extensions/**/ w,

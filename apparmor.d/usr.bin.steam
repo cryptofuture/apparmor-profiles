@@ -22,13 +22,13 @@
 	owner @{HOME}/ rwk,
 	owner @{HOME}/** rwkmix,
 	owner @{HOME}/.local/share/Steam/ubuntu{32,64}/fontconfig/** rwkl,
-    
-    # Steamapss non-default location
+
+	# Steamapss non-default locations
 	/mnt/Steam/ rwk,
 	/mnt/Steam/* rwkmix,
 	/mnt/Steam/** rwkmix,
-    /mnt/ r,
-    
+	/mnt/ r,
+
 	/usr/share/blastem/blastem-bin rix,
 	/usr/share/blastem/* r,
 	/usr/share/blastem/** r,
@@ -48,6 +48,18 @@
 	/dev/input/event* rw,
 	/dev/input/js* rw,
 	/var/lib/usbutils/usb.ids r,
+
+	# Victor Vran
+	/etc/ssl/openssl.cnf r,
+
+	# Steam controller, steam 13 Dec update
+	/dev/input/by-id/usb-Valve* r,
+	/dev/hidraw* rw,
+
+	# Steam overlay could crash without it, for example with Enclave
+	/proc/uptime r,
+	/proc/sys/kernel/pid_max r,
+	/proc/ r,
 
 
 	# Steam bootstrap is a bash script
