@@ -63,6 +63,7 @@ After=systemd-random-seed.service apparmor.service
 * [system_tor](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/system_tor)
 * [usr.bin.firefox](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/usr.bin.firefox) and [usr.bin.firefox-trunk](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/usr.bin.firefox-trunk)
 * [usr.bin.pidgin](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/usr.bin.pidgin)
+* [usr.bin.quasselclient](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/usr.bin.quasselclient)
 * [usr.bin.steam](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/usr.bin.steam), you need to tweak username and steam library location, before use in your own environment. This profile support steam controller. And better use steam under separated user anyway, since most games like to store saves in `~/Documents`, or in own separated folders in `~` and your `~/.config` and `~/.local` folders will be recycled with different games data. What I talking about is that private files abstractions don't play well with steam, and better use separated user with slightly modified abstraction.
 * [usr.sbin.privoxy](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/usr.sbin.privoxy)
 * [usr.bin.mupdf](https://github.com/cryptofuture/apparmor-profiles/raw/master/apparmor.d/usr.bin.mupdf)
