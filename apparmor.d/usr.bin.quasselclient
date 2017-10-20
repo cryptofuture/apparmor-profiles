@@ -1,0 +1,20 @@
+#include <tunables/global>
+
+/usr/bin/quasselclient {
+  #include <abstractions/base>
+  #include <abstractions/dbus-session>
+  #include <abstractions/kde>
+  #include <abstractions/nameservice>
+
+  /etc/xdg/** r,
+  @{HOME}/.ICEauthority r,
+  @{HOME}/.Xauthority r,
+  @{HOME}/.config/Trolltech.conf r,
+  @{HOME}/.config/quassel-irc.org/** rw,
+  @{HOME}/.kde/** rw,
+  @{HOME}/.local/share/** r,
+  /usr/bin/quasselclient mr,
+  /usr/share/** r,
+  /var/tmp/** rwlk,
+
+}
