@@ -41,6 +41,7 @@
   /usr/lib/dovecot/dict Px,
   /usr/lib/dovecot/dovecot-auth Pxmr,
   /usr/lib/dovecot/imap Pxmr,
+  /usr/lib/dovecot/imap-hibernate rix,
   /usr/lib/dovecot/imap-login Pxmr,
   /usr/lib/dovecot/lmtp Px,
   /usr/lib/dovecot/log Px,
