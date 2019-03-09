@@ -17,3 +17,5 @@
   signal receive peer=/usr/sbin/dovecot,
 
   /{var/,}run/dovecot/config rw,
+  # Directory set in mail_temp_dir
+  /tmp/dovecot.* rw,
